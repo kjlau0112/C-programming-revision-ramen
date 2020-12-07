@@ -20,7 +20,7 @@ void pointerGetvaluefromReturn()
 
 void pointer2PointerDemo()
 {
-    int **ipp;
+    int **ipp = NULL;
     int i = 5, j = 6, k = 7;
 	int *ip1 = &i, *ip2 = &j;
     int value =0;
