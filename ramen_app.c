@@ -20,6 +20,24 @@ struct master_student
     char major[15];
 };
 
+void  demo_array()
+{
+    int array[5] = {1,2,3,4,5};
+  
+   // address  of first index of the array
+   // address  of  the whole array of 5 int start with index 1
+   // both the same in this case.
+   printf("array=%p : &array=%p\n", array, &array);  
+  
+   //array+1 mean first array address = address +4
+   //&array mean whole  array address + (5*4 =20) = 0x14
+   printf("array+1 = %p : &array + 1 = %p \n", array+1, &array+1); 
+
+   printf("*(&array + 1) %p\n", *(&array + 1));
+    
+    printf("diff %d\n", *(&array + 1) -array);
+}
+
 void process_data_Structure()
 {
     // student structure variable
@@ -184,6 +202,7 @@ int main(int argc, char *argv[])
             break;
             
             case'f':
+                demo_array();
             break;
 
             default :
