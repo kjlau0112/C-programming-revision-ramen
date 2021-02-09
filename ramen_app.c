@@ -2,7 +2,66 @@
 #include <unistd.h>  
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
+// student structure
+struct student 
+{
+    char id[15];
+    char firstname[64];
+    char lastname[64];
+    float points;
+};
+
+
+struct master_student 
+{
+    struct student  *student_ptr;
+    char major[15];
+};
+
+void process_data_Structure()
+{
+    // student structure variable
+    struct student std[2];
+    struct student *ptr = NULL;
+    strcpy(std[0].id,"5523224");
+    strcpy(std[0].firstname,"william");
+    strcpy(std[0].lastname,"jackson");
+    std[0].points = 1525.23;
+
+    strcpy(std[1].id,"123456");
+    strcpy(std[1].firstname,"Donald");
+    strcpy(std[1].lastname,"Trumph");
+    std[2].points = 552.23;
+
+    ptr = std;
+
+    printf("ptr ->id %s\n",ptr->id);
+    printf("ptr ->id %s\n",ptr->firstname);
+    printf("ptr ->id %s\n",ptr->lastname);
+
+    ptr++;
+
+    printf("ptr ->id %s\n",ptr->id);
+    printf("ptr ->id %s\n",ptr->firstname);
+    printf("ptr ->id %s\n",ptr->lastname);
+
+    struct master_student *MasterInfo = (struct master_student *) malloc(sizeof(struct master_student *));
+    MasterInfo->student_ptr = (struct student*) malloc(sizeof(struct student *));
+    strcpy(MasterInfo->student_ptr->firstname,"Joe");
+    strcpy(MasterInfo->student_ptr->lastname,"Biden");
+    strcpy(MasterInfo->student_ptr->id,"46");
+    strcpy(MasterInfo->major,"Physics");
+
+    printf("MasterInfo->student_ptr->firstname %s\n",MasterInfo->student_ptr->firstname);
+    printf("MasterInfo->student_ptr->lastname %s\n",MasterInfo->student_ptr->lastname);
+    printf("MasterInfo->student_ptr->id %s\n",MasterInfo->student_ptr->id);
+    printf("MasterInfo->major %s\n",MasterInfo->major );
+    
+    free(MasterInfo->student_ptr);
+    free(MasterInfo);
+}
 
 int *setValueDynamically()
 {
@@ -121,6 +180,7 @@ int main(int argc, char *argv[])
             break;
                         
             case'e':
+                process_data_Structure();
             break;
             
             case'f':
