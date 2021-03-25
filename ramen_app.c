@@ -4,6 +4,12 @@
 #include <time.h>
 #include <string.h>
 
+typedef struct
+{
+    int *values;
+    int head, tail,number_entries,size;
+}queue;
+
 // student structure
 struct student 
 {
@@ -20,6 +26,96 @@ struct master_student
     char major[15];
 };
 
+void init_que(queue *q, int max_size)
+{
+    q->size = max_size;
+    q->values = malloc(sizeof(int)*q->size);
+    q->number_entries = 0;
+    q->head = 0 ;
+    q->tail = 0;
+}
+
+int queu_empty(queue *q)
+{
+    return (q->number_entries == 0);
+}
+
+int queu_full(queue *q)
+{
+    return (q->number_entries == q->size);
+}
+
+void queue_destroy(queue *q)
+{
+    free(q->values);
+}
+
+int enqueue(queue* q, int value)
+{
+    if(queu_full(q))
+    {
+        return -1;
+    }
+    q->values[q->tail] = value;
+    q->number_entries++;
+    q->tail =q->tail +1;
+    
+    if(q->tail >= q->size)
+    {
+        q->tail = 0;
+    }
+    // alternatively
+    // q->tail = (q->tail +1) % q->size; 
+
+    return 1;
+}
+
+int dequeue(queue *q)
+{
+    int result = 0;
+
+    if(queu_empty(q))
+    {
+        return 0;
+    }
+    result =  q->values[q->head];
+
+        q->head =q->head +1;
+    
+    // alternatively
+    // q->head = (q->head +1) % q->size; 
+
+    if(q->head >= q->size)
+    {
+        q->head = 0;
+    }
+
+    q->number_entries--;
+
+    return result;
+}
+
+void circular_que_demo()
+{
+    queue obj;
+    int number = 0;
+    init_que(&obj,5);
+
+    enqueue(&obj, 1);
+    enqueue(&obj, 2);
+    enqueue(&obj, 3);
+    enqueue(&obj, 4);
+    enqueue(&obj, 5);
+    enqueue(&obj, 5);
+
+    while((number = dequeue(&obj)) != 0)
+    {
+        printf("enque number is %d\n", number);
+
+    }
+
+}
+
 void  demo_array()
 {
     int array[5] = {1,2,3,4,5};
@@ -35,7 +131,7 @@ void  demo_array()
 
    printf("*(&array + 1) %p\n", *(&array + 1));
     
-    printf("diff %d\n", *(&array + 1) -array);
+    printf("diff %ld\n", *(&array + 1) -array);
 }
 
 void process_data_Structure()
@@ -177,7 +273,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdef")) != -1)
+    while((opt = getopt(argc, argv,"abcdefg")) != -1)
     {
         switch(opt)
         {
@@ -203,6 +299,10 @@ int main(int argc, char *argv[])
             
             case'f':
                 demo_array();
+            break;
+
+            case'g':
+                circular_que_demo();
             break;
 
             default :
