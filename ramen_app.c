@@ -42,7 +42,7 @@ int queu_empty(queue *q)
 
 int queu_full(queue *q)
 {
-    return (q->number_entries == q->size);
+    return (q->number_entries == q->size) && (q->number_entries == 0);
 }
 
 void queue_destroy(queue *q)
@@ -78,9 +78,10 @@ int dequeue(queue *q)
     {
         return 0;
     }
+    
     result =  q->values[q->head];
 
-        q->head =q->head +1;
+    q->head =q->head +1;
     
     // alternatively
     // q->head = (q->head +1) % q->size; 
@@ -107,6 +108,7 @@ void circular_que_demo()
     enqueue(&obj, 4);
     enqueue(&obj, 5);
     enqueue(&obj, 5);
+    enqueue(&obj, 6);
 
     while((number = dequeue(&obj)) != 0)
     {
