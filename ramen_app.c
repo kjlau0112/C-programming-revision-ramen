@@ -41,6 +41,57 @@ void init_que(queue *q, int max_size)
     q->tail = 0;
 }
 
+
+void deleteParticularChar(struct node **head_ref, char targetChar)
+{
+ // Store head node
+    struct node *temp = *head_ref, *prev;
+ 
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->data == targetChar) {
+        *head_ref = temp->nextPtr; // Changed head
+        free(temp); // free old head
+        return;
+    }
+ 
+    // Search for the key to be deleted, keep track of the
+    // previous node as we need to change 'prev->next'
+    while (temp != NULL && temp->data != targetChar) {
+        prev = temp;
+        temp = temp->nextPtr;
+    }
+ 
+    // If key was not present in linked list
+    if (temp == NULL)
+        return;
+    
+    if(temp->data == targetChar)
+    {
+            // Unlink the node from linked list
+        prev->nextPtr = temp->nextPtr;
+ 
+        free(temp); // Free memory
+    }
+}
+
+void deleteEntireLinkList(struct node** head_ref)
+{
+   /* deref head_ref to get the real head */
+   struct node* current = *head_ref;
+   struct node* next;
+ 
+   while (current != NULL)
+   {
+       next = current->nextPtr;
+       free(current);
+       current = next;
+   }
+   
+   /* deref head_ref to affect the real head back
+      in the caller. */
+   *head_ref = NULL;
+}
+
 void initializeNode (struct node ** head, char val)
 {
     struct node*  initial_node = malloc(sizeof(struct node));
@@ -96,6 +147,14 @@ void link_list_demo()
     insertAtBegining(&head, 'A');
 
     insertAtBegining(&head, 'D');
+
+    insertAtEnd(&head, 'L');
+
+    insertAtEnd(&head, 'O');
+
+    insertAtEnd(&head, 'L');
+
+    deleteParticularChar(&head,'L');
     
     printfList(head);
 }
