@@ -4,6 +4,12 @@
 #include <time.h>
 #include <string.h>
 
+struct node
+{
+    char data;
+    struct node* nextPtr;
+};
+
 typedef struct
 {
     int *values;
@@ -33,6 +39,65 @@ void init_que(queue *q, int max_size)
     q->number_entries = 0;
     q->head = 0 ;
     q->tail = 0;
+}
+
+void initializeNode (struct node ** head, char val)
+{
+    struct node*  initial_node = malloc(sizeof(struct node));
+    initial_node -> data = val;
+    initial_node -> nextPtr = NULL;
+    *head = initial_node; 
+}
+
+void insertAtBegining (struct node ** head, char val)
+{
+    struct node*  initial_node = malloc(sizeof(struct node));
+    initial_node -> data = val;
+    initial_node -> nextPtr = *head;
+    *head = initial_node; 
+}
+
+void insertAtEnd(struct node ** head, char val)
+{
+    struct node * current = *head;
+    if(current!= NULL)
+    {
+        while (current->nextPtr != NULL)
+        {
+            current= current ->nextPtr;
+        }
+        current->nextPtr = malloc (sizeof(struct node));
+        current->nextPtr->data = val;
+        current->nextPtr->nextPtr = NULL;
+    }
+    else 
+    {
+        current = malloc (sizeof(struct node));
+        current -> data = val;
+        current ->nextPtr = NULL;
+    }
+}
+
+void printfList(struct node* currentPtr)
+{
+    while(currentPtr != NULL)
+    {
+        printf("the head -> data is  %c\n", currentPtr-> data);
+        currentPtr = currentPtr->nextPtr;
+    }
+}
+
+void link_list_demo()
+{
+    struct node* head = NULL;  // be aware that this is pointer
+
+    initializeNode(&head, 'C');
+
+    insertAtBegining(&head, 'A');
+
+    insertAtBegining(&head, 'D');
+    
+    printfList(head);
 }
 
 int queu_empty(queue *q)
@@ -107,8 +172,8 @@ void circular_que_demo()
     enqueue(&obj, 3);
     enqueue(&obj, 4);
     enqueue(&obj, 5);
-    enqueue(&obj, 5);
     enqueue(&obj, 6);
+
 
     while((number = dequeue(&obj)) != 0)
     {
@@ -275,7 +340,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefg")) != -1)
+    while((opt = getopt(argc, argv,"abcdefgh")) != -1)
     {
         switch(opt)
         {
@@ -305,6 +370,10 @@ int main(int argc, char *argv[])
 
             case'g':
                 circular_que_demo();
+            break;
+
+            case'h':
+                link_list_demo();
             break;
 
             default :
