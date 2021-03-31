@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdint.h>
 
 struct node
 {
@@ -13,7 +14,7 @@ struct node
 typedef struct
 {
     int *values;
-    int head, tail,number_entries,size;
+    int head, tail,number_entries,size,full_flag;
 }queue;
 
 // student structure
@@ -32,15 +33,123 @@ struct master_student
     char major[15];
 };
 
-void init_que(queue *q, int max_size)
+typedef struct {
+    uint8_t * const buffer;
+    int head;
+    int tail;
+    const int maxlen;
+} circ_bbuf_t;
+
+int circ_bbuf_push(circ_bbuf_t *c, uint8_t data)
 {
-    q->size = max_size;
-    q->values = malloc(sizeof(int)*q->size);
-    q->number_entries = 0;
-    q->head = 0 ;
-    q->tail = 0;
+    int next;
+
+    next = c->head + 1;  // next is where head will point to after this write.
+    if (next >= c->maxlen)
+        next = 0;
+
+    if (next == c->tail)  // if the head + 1 == tail, circular buffer is full
+        return -1;
+
+    c->buffer[c->head] = data;  // Load data and then move
+    c->head = next;             // head to next data offset.
+    return 0;  // return success to indicate successful push.
 }
 
+#define CIRC_BBUF_DEF(x,y)                \
+    uint8_t x##_data_space[y];            \
+    circ_bbuf_t x = {                     \
+        .buffer = x##_data_space,         \
+        .head = 0,                        \
+        .tail = 0,                        \
+        .maxlen = y                       \
+    }
+
+int circ_bbuf_pop(circ_bbuf_t *c, uint8_t *data)
+{
+    int next;
+
+    if (c->head == c->tail)  // if the head == tail, we don't have any data
+        return -1;
+
+    next = c->tail + 1;  // next is where tail will point to after this read.
+    if(next >= c->maxlen)
+        next = 0;
+
+    *data = c->buffer[c->tail];  // Read data and then move
+    c->tail = next;              // tail to next offset.
+    return 0;  // return success to indicate successful push.
+}
+
+CIRC_BBUF_DEF(my_circ_buf, 5);
+
+int your_application()
+{
+    uint8_t out_data=0, in_data = 0x55;
+    int i;
+    for (i =0;i<=5; i++)
+    {
+        in_data=i;
+        
+        if (circ_bbuf_push(&my_circ_buf, in_data)) 
+        {
+            printf("Out of space in CB\n");
+            return -1;
+        }
+
+        if (circ_bbuf_pop(&my_circ_buf, &out_data)) 
+        {
+            printf("CB is empty\n");
+            return -1;
+        }
+
+        // here in_data = in_data = 0x55;
+        printf("Push: 0x%x\n", in_data);
+        printf("Pop:  0x%x\n", out_data);
+    }
+
+    return 0;
+}
+
+void deleteAllOccurrences(struct Node** head_ref, int key)
+{
+    // Store head node
+    struct node *temp = *head_ref, *prev;
+ 
+    // If head node itself holds the key or multiple
+    // occurrences of key
+    while (temp != NULL && temp->data == key)
+    {
+        *head_ref = temp->nextPtr; // Changed head
+        free(temp); // free old head
+        temp = *head_ref; // Change Temp
+    }
+ 
+    // Delete occurrences other than head
+    while (temp != NULL)
+    {
+        // Search for the key to be deleted, keep track of
+        // the previous node as we need to change
+        // 'prev->next'
+        while (temp != NULL && temp->data != key)
+        {
+            prev = temp;
+            temp = temp->nextPtr;
+        }
+ 
+        // If key was not present in linked list
+        if (temp == NULL)
+            return;
+ 
+        // Unlink the node from linked list
+        prev->nextPtr = temp->nextPtr;
+ 
+        free(temp); // Free memory
+ 
+        // Update Temp for next iteration of outer loop
+        temp = prev->nextPtr;
+    }
+}
 
 void deleteParticularChar(struct node **head_ref, char targetChar)
 {
@@ -159,14 +268,22 @@ void link_list_demo()
     printfList(head);
 }
 
+void init_que(queue *q, int max_size)
+{
+    q->size = max_size;
+    q->values = malloc(sizeof(int)*q->size);
+    q->number_entries = 0;
+    q->head = 0 ;
+    q->tail = 0;
+}
+
 int queu_empty(queue *q)
 {
     return (q->number_entries == 0);
 }
-
 int queu_full(queue *q)
 {
-    return (q->number_entries == q->size) && (q->number_entries == 0);
+    return (q->number_entries == q->size) ;
 }
 
 void queue_destroy(queue *q)
@@ -178,11 +295,16 @@ int enqueue(queue* q, int value)
 {
     if(queu_full(q))
     {
-        return -1;
+        q->head = 0;
     }
+    else 
+    {
+        q->number_entries++;
+    }
+
     q->values[q->tail] = value;
-    q->number_entries++;
-    q->tail =q->tail +1;
+
+    q->tail =q->tail + 1;
     
     if(q->tail >= q->size)
     {
@@ -232,6 +354,11 @@ void circular_que_demo()
     enqueue(&obj, 4);
     enqueue(&obj, 5);
     enqueue(&obj, 6);
+    enqueue(&obj, 7);
+        enqueue(&obj, 8);
+    enqueue(&obj, 9);
+        enqueue(&obj, 10);
+    enqueue(&obj, 11);
 
 
     while((number = dequeue(&obj)) != 0)
@@ -239,6 +366,7 @@ void circular_que_demo()
         printf("enque number is %d\n", number);
 
     }
+    // your_application();
 
 }
 
