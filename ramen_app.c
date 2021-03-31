@@ -112,7 +112,7 @@ int your_application()
     return 0;
 }
 
-void deleteAllOccurrences(struct Node** head_ref, int key)
+void deleteAllOccurrences(struct node** head_ref, int key)
 {
     // Store head node
     struct node *temp = *head_ref, *prev;
@@ -452,7 +452,7 @@ void pointer2PointerDemo()
     int i = 5, j = 6, k = 7;
 	int *ip1 = &i, *ip2 = &j;
     int value =0;
-    printf("NOTE &var is getting address of the variables.\nif the variable is *ptr, printing ptr may yield address of the variable  it poiting to via ptr=&variable\n");
+    printf("NOTE &var is getting address of the variables  address of the variable on the  computer.\nif the pointer is *ptr and it pointing to some variable such as ptr=&variable , printing ptr only may yield address of the variable  it poiting to.\n");
     printf("We usually confused when a pointer is with '&' or without '&' operator,refer INfO 2 & INFO 3 to recall\n");
     printf("--------------------------------------\n");
     printf("INFO 1\n");
@@ -474,8 +474,9 @@ void pointer2PointerDemo()
     printf("adress of  ip1 is %p\n",ip1);
     printf("*ip2 = &j:");
     printf("adress of  ip2 is %p\n",ip2);
-     printf("ipp is not doing anything yet:");
+    printf("ipp is not doing anything yet:");
     printf("adress of  ipp is %p\n",ipp);
+    printf("adress of  &ipp is %p\n",&ipp);
     printf("--------------------------------------\n");
     printf("INFO 4\n");
     ipp = &ip1;
@@ -495,6 +496,7 @@ void b_changePointerValuewithPtr2Ptr(int ** ptr)
     *local = random()%20;
     printf("locla function value is %d\n", *local);
     *ptr = &(*local);
+     printf("debug *ptr is %d\n", **ptr);
     // free(local); if you free withhin this function will result 0 in outside.
 }
 
