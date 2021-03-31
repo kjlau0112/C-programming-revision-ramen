@@ -45,7 +45,8 @@ int circ_bbuf_push(circ_bbuf_t *c, uint8_t data)
     int next;
 
     next = c->head + 1;  // next is where head will point to after this write.
-    if (next >= c->maxlen)
+    printf("maxlen %d\n",c->maxlen);
+    if (next > c->maxlen)
         next = 0;
 
     if (next == c->tail)  // if the head + 1 == tail, circular buffer is full
@@ -73,7 +74,7 @@ int circ_bbuf_pop(circ_bbuf_t *c, uint8_t *data)
         return -1;
 
     next = c->tail + 1;  // next is where tail will point to after this read.
-    if(next >= c->maxlen)
+    if(next > c->maxlen)
         next = 0;
 
     *data = c->buffer[c->tail];  // Read data and then move
@@ -344,29 +345,29 @@ int dequeue(queue *q)
 
 void circular_que_demo()
 {
-    queue obj;
-    int number = 0;
-    init_que(&obj,5);
+    // queue obj;
+    // int number = 0;
+    // init_que(&obj,5);
 
-    enqueue(&obj, 1);
-    enqueue(&obj, 2);
-    enqueue(&obj, 3);
-    enqueue(&obj, 4);
-    enqueue(&obj, 5);
-    enqueue(&obj, 6);
-    enqueue(&obj, 7);
-    enqueue(&obj, 8);
-    enqueue(&obj, 9);
-    enqueue(&obj, 10);
-    enqueue(&obj, 11);
+    // enqueue(&obj, 1);
+    // enqueue(&obj, 2);
+    // enqueue(&obj, 3);
+    // enqueue(&obj, 4);
+    // enqueue(&obj, 5);
+    // enqueue(&obj, 6);
+    // enqueue(&obj, 7);
+    // enqueue(&obj, 8);
+    // enqueue(&obj, 9);
+    // enqueue(&obj, 10);
+    // enqueue(&obj, 11);
 
 
-    while((number = dequeue(&obj)) != 0)
-    {
-        printf("enque number is %d\n", number);
+    // while((number = dequeue(&obj)) != 0)
+    // {
+    //     printf("enque number is %d\n", number);
 
-    }
-    // your_application();
+    // }
+    your_application();
 
 }
 
@@ -452,7 +453,7 @@ void pointer2PointerDemo()
 	int *ip1 = &i, *ip2 = &j;
     int value =0;
     printf("NOTE &var is getting address of the variables.\nif the variable is *ptr, printing ptr may yield address of the variable  it poiting to via ptr=&variable\n");
-    printf("We usually confused when a pointer is with '&' or without '&' operator,refer INfO 2 to recall\n");
+    printf("We usually confused when a pointer is with '&' or without '&' operator,refer INfO 2 & INFO 3 to recall\n");
     printf("--------------------------------------\n");
     printf("INFO 1\n");
     printf("i,j,k is just constant variable\n");
@@ -463,7 +464,10 @@ void pointer2PointerDemo()
     printf("INFO 2\n");
     printf("adress of pointer &ip1 is %p\n",&ip1);
     printf("adress of pointer &ip2 is %p\n",&ip2);
-    printf("adress of pointer &ipp is %p\n",&ipp);
+    printf("adress of pointer &ipp is %p\n",&ipp);   
+    printf("adress of pointer ip1 is %p\n",ip1);
+    printf("adress of pointer ip2 is %p\n",ip2);
+    //printf("adress of pointer ipp is %p\n",&ipp);
     printf("--------------------------------------\n");
     printf("INFO 3\n");
     printf("*ip1 = &i:");
