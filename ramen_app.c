@@ -40,6 +40,131 @@ typedef struct {
     const int maxlen;
 } circ_bbuf_t;
 
+void sort_2D_array()
+{
+    int i,j,k;
+    int oneDarr[16];
+    int count=0;
+    int step;
+    int size;
+    int matrix[4][4];
+    int disp[4][4] = 
+    {
+        {10, 11, 12, 13},
+        {14, 15, 16, 17},
+        {25, 100, 21, 213},
+        {134, 43, 64, 75}
+    };
+    
+    for (i = 0; i < 4; ++i) 
+    {
+        for (j = 0; j < 4; ++j)
+        {
+            // mapping 1D array to 2D array
+            oneDarr[count++] = disp[i][j];
+        }
+    }
+
+    printf("before sort\n");
+    for(i =0; i<16;i++)
+    {
+        printf("%d\n",oneDarr[i]);
+    }
+
+    size =sizeof(oneDarr)/sizeof(oneDarr[0]);
+    
+    for(step =0; step<size-1; step++)
+    {
+         swapped = 0;
+        for (int arrIndex = 0; arrIndex< size -step - 1; arrIndex++) 
+        {
+      
+            // To sort in descending order, change">" to "<".
+            if (arr[arrIndex] > arr[arrIndex + 1]) 
+            {    
+                // swap if greater is at the rear position
+                int temp = arr[arrIndex];
+                arr[arrIndex] = arr[arrIndex + 1];
+                arr[arrIndex + 1] = temp;
+                 swapped = 1;
+            } 
+            
+            if( swapped == 0)
+            {
+                break;
+            }  
+        }
+    }
+
+    printf("after sort\n");
+    for(i =0; i<16;i++)
+    {
+        
+        printf("%d\n",oneDarr[i]);
+    }
+
+    int index =0;
+    for(i=0;i<4;i++)
+     {
+         for(j=0;j<4;j++)
+         {
+             matrix[i][j] = oneDarr[index++];
+         }
+     }
+
+    printf("2D arr\n");
+    for(i=0;i<4;i++)
+    {
+        for(j=0;j<4;j++)
+        {
+            printf("%d,", matrix[i][j]);
+            
+            if(j ==3 )
+            {
+               printf("\n");              
+            }
+            
+        }
+    }
+}
+
+void sort_1D_array()
+{
+    int arr[]={0,100,20,30,50};
+    int step;
+    int arrIndex;
+    int size= sizeof(arr)/sizeof(arr[0]);
+    int  swapped = 0;
+
+    for(step =0; step<size-1; step++)
+    {
+         swapped = 0;
+        for (int arrIndex = 0; arrIndex< size -step - 1; arrIndex++) 
+        {
+      
+            // To sort in descending order, change">" to "<".
+            if (arr[arrIndex] > arr[arrIndex + 1]) 
+            {    
+                // swap if greater is at the rear position
+                int temp = arr[arrIndex];
+                arr[arrIndex] = arr[arrIndex + 1];
+                arr[arrIndex + 1] = temp;
+                 swapped = 1;
+            } 
+            
+            if( swapped == 0)
+            {
+                break;
+            }  
+        }
+    }
+        
+    for(step =0; step<size; step++)
+    {
+        printf("%d\n", arr[step]);
+    }
+}
+
 int circ_bbuf_push(circ_bbuf_t *c, uint8_t data)
 {
     int next;
@@ -148,7 +273,7 @@ void deleteAllOccurrences(struct node** head_ref, int key)
         free(temp); // Free memory
  
         // Update Temp for next iteration of outer loop
-        temp = prev->nextPtr;
+      //   temp = prev->nextPtr;
     }
 }
 
@@ -263,8 +388,9 @@ void link_list_demo()
     insertAtEnd(&head, 'O');
 
     insertAtEnd(&head, 'L');
+        insertAtEnd(&head, 'M');
 
-    deleteParticularChar(&head,'L');
+    deleteAllOccurrences(&head,'L');
     
     printfList(head);
 }
@@ -294,6 +420,8 @@ void queue_destroy(queue *q)
 
 int enqueue(queue* q, int value)
 {
+    printf("enqueue adress of pointer q is %p\n",q);
+    printf("enqueue adress of pointer &q is %p\n",&q);
     if(queu_full(q))
     {
         q->head = 0;
@@ -345,11 +473,12 @@ int dequeue(queue *q)
 
 void circular_que_demo()
 {
-    // queue obj;
-    // int number = 0;
-    // init_que(&obj,5);
+    queue obj;
+    printf("adress of pointer &obj is %p\n",&obj);
 
-    // enqueue(&obj, 1);
+    init_que(&obj,5);
+
+     enqueue(&obj, 1);
     // enqueue(&obj, 2);
     // enqueue(&obj, 3);
     // enqueue(&obj, 4);
@@ -367,7 +496,7 @@ void circular_que_demo()
     //     printf("enque number is %d\n", number);
 
     // }
-    your_application();
+    // your_application();
 
 }
 
@@ -495,7 +624,10 @@ void b_changePointerValuewithPtr2Ptr(int ** ptr)
     int *local = (int*)malloc(sizeof(int*));
     *local = random()%20;
     printf("locla function value is %d\n", *local);
-    *ptr = &(*local);
+    printf("adress of  local is %p\n",local);
+    printf("adress of  &(*local) is %p\n", &(*local));
+    // *ptr = &(*local);
+    *ptr = local;
      printf("debug *ptr is %d\n", **ptr);
     // free(local); if you free withhin this function will result 0 in outside.
 }
@@ -533,7 +665,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefgh")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghij")) != -1)
     {
         switch(opt)
         {
@@ -567,6 +699,14 @@ int main(int argc, char *argv[])
 
             case'h':
                 link_list_demo();
+            break;
+
+            case'i':
+                sort_1D_array();      
+            break;
+
+            case'j':
+                sort_2D_array();      
             break;
 
             default :
