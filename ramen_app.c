@@ -355,9 +355,9 @@ void circular_que_demo()
     enqueue(&obj, 5);
     enqueue(&obj, 6);
     enqueue(&obj, 7);
-        enqueue(&obj, 8);
+    enqueue(&obj, 8);
     enqueue(&obj, 9);
-        enqueue(&obj, 10);
+    enqueue(&obj, 10);
     enqueue(&obj, 11);
 
 
