@@ -397,6 +397,11 @@ int queu_empty(queue *q)
 
 int queu_full(queue *q)
 {
+    return (q->number_entries == q->size);
+}
+
+int wrap_around_required(queue *q)
+{
     return (q->number_entries >= q->size);
 }
 
@@ -409,7 +414,7 @@ int enqueue(queue* q, int value)
 {
     q->counter++;
 
-    if(queu_full(q))
+    if(wrap_around_required(q))
     {
         if(q->counter >= q->size)
         {
@@ -475,7 +480,7 @@ void circular_que_demo()
     enqueue(&obj, 7);
     enqueue(&obj, 8);
     enqueue(&obj, 9);
-    enqueue(&obj, 10);
+
 
     printf("deeeeeee 1 = %d \n", dequeue(&obj));
     printf("deeeeeee 2 = %d \n", dequeue(&obj));
