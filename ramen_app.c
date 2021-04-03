@@ -14,7 +14,7 @@ struct node
 typedef struct
 {
     int *values;
-    int head, tail,number_entries,size,full_flag;
+    int head, tail,number_entries,size,counter;
 }queue;
 
 // student structure
@@ -75,24 +75,17 @@ void sort_2D_array()
     
     for(step =0; step<size-1; step++)
     {
-         swapped = 0;
         for (int arrIndex = 0; arrIndex< size -step - 1; arrIndex++) 
         {
       
             // To sort in descending order, change">" to "<".
-            if (arr[arrIndex] > arr[arrIndex + 1]) 
+            if (oneDarr[arrIndex] > oneDarr[arrIndex + 1]) 
             {    
                 // swap if greater is at the rear position
-                int temp = arr[arrIndex];
-                arr[arrIndex] = arr[arrIndex + 1];
-                arr[arrIndex + 1] = temp;
-                 swapped = 1;
+                int temp = oneDarr[arrIndex];
+                oneDarr[arrIndex] = oneDarr[arrIndex + 1];
+                oneDarr[arrIndex + 1] = temp;
             } 
-            
-            if( swapped == 0)
-            {
-                break;
-            }  
         }
     }
 
@@ -119,7 +112,7 @@ void sort_2D_array()
         {
             printf("%d,", matrix[i][j]);
             
-            if(j ==3 )
+            if(j == 3)
             {
                printf("\n");              
             }
@@ -134,11 +127,9 @@ void sort_1D_array()
     int step;
     int arrIndex;
     int size= sizeof(arr)/sizeof(arr[0]);
-    int  swapped = 0;
 
     for(step =0; step<size-1; step++)
     {
-         swapped = 0;
         for (int arrIndex = 0; arrIndex< size -step - 1; arrIndex++) 
         {
       
@@ -149,13 +140,7 @@ void sort_1D_array()
                 int temp = arr[arrIndex];
                 arr[arrIndex] = arr[arrIndex + 1];
                 arr[arrIndex + 1] = temp;
-                 swapped = 1;
             } 
-            
-            if( swapped == 0)
-            {
-                break;
-            }  
         }
     }
         
@@ -388,7 +373,7 @@ void link_list_demo()
     insertAtEnd(&head, 'O');
 
     insertAtEnd(&head, 'L');
-        insertAtEnd(&head, 'M');
+    insertAtEnd(&head, 'M');
 
     deleteAllOccurrences(&head,'L');
     
@@ -402,15 +387,17 @@ void init_que(queue *q, int max_size)
     q->number_entries = 0;
     q->head = 0 ;
     q->tail = 0;
+    q->counter = 0;
 }
 
 int queu_empty(queue *q)
 {
     return (q->number_entries == 0);
 }
+
 int queu_full(queue *q)
 {
-    return (q->number_entries == q->size) ;
+    return (q->number_entries >= q->size);
 }
 
 void queue_destroy(queue *q)
@@ -420,25 +407,26 @@ void queue_destroy(queue *q)
 
 int enqueue(queue* q, int value)
 {
-    printf("enqueue adress of pointer q is %p\n",q);
-    printf("enqueue adress of pointer &q is %p\n",&q);
+    q->counter++;
+
     if(queu_full(q))
     {
-        q->head = 0;
+        if(q->counter >= q->size)
+        {
+            q->tail = 0;
+            q->counter = 0;
+        }
+
+        q->values[q->tail] = value;
     }
-    else 
+    else
     {
+        q->values[q->tail] = value;
         q->number_entries++;
     }
-
-    q->values[q->tail] = value;
-
+    
     q->tail =q->tail + 1;
     
-    if(q->tail >= q->size)
-    {
-        q->tail = 0;
-    }
     // alternatively
     // q->tail = (q->tail +1) % q->size; 
 
@@ -474,22 +462,26 @@ int dequeue(queue *q)
 void circular_que_demo()
 {
     queue obj;
-    printf("adress of pointer &obj is %p\n",&obj);
+    int number;
 
     init_que(&obj,5);
 
-     enqueue(&obj, 1);
-    // enqueue(&obj, 2);
-    // enqueue(&obj, 3);
-    // enqueue(&obj, 4);
-    // enqueue(&obj, 5);
-    // enqueue(&obj, 6);
-    // enqueue(&obj, 7);
-    // enqueue(&obj, 8);
-    // enqueue(&obj, 9);
-    // enqueue(&obj, 10);
-    // enqueue(&obj, 11);
+    enqueue(&obj, 1);
+    enqueue(&obj, 2);
+    enqueue(&obj, 3);
+    enqueue(&obj, 4);
+    enqueue(&obj, 5);
+    enqueue(&obj, 6);
+    enqueue(&obj, 7);
+    enqueue(&obj, 8);
+    enqueue(&obj, 9);
+    enqueue(&obj, 10);
 
+    printf("deeeeeee 1 = %d \n", dequeue(&obj));
+    printf("deeeeeee 2 = %d \n", dequeue(&obj));
+    printf("deeeeeee 3 = %d \n", dequeue(&obj));
+    printf("deeeeeee 4 = %d \n", dequeue(&obj));
+    printf("deeeeeee 5 = %d \n", dequeue(&obj));
 
     // while((number = dequeue(&obj)) != 0)
     // {
@@ -497,7 +489,6 @@ void circular_que_demo()
 
     // }
     // your_application();
-
 }
 
 void  demo_array()
