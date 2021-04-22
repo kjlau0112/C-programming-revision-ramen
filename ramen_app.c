@@ -4,6 +4,26 @@
 #include <time.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h> 
+
+enum week
+{
+    monday,
+    tuesday,
+    wednesday
+}week_obj;
+
+struct test_Struct_style_2
+{
+    int a;
+    int b;
+};
+
+struct test_Struct_style_1
+{
+    int x:1;
+    int y:2;
+};
 
 struct node
 {
@@ -39,6 +59,95 @@ typedef struct {
     int tail;
     const int maxlen;
 } circ_bbuf_t;
+
+void c_style_enum()
+{
+    week_obj;
+    week_obj++;
+    printf("post increment of enum is %d\n",week_obj);
+    week_obj++;
+    printf("post increment again of enum is %d\n",week_obj);
+}
+
+
+void bitwise()
+{
+    int num, position, newNum, bitStatus;
+
+    /* Input number from user */
+    printf("Enter any number: ");
+    scanf("%d", &num);
+
+    /* Input bit position you want to set */
+    printf("Enter nth bit to check and set (0-31): ");
+    scanf("%d", &position);
+
+    /* Right shift num, position times and perform bitwise AND with 1 */
+    bitStatus = (num >> position) & 1;
+    
+    if(bitStatus)
+    {
+        printf("Position bit %d  of num %d is set\n",position, num);
+    }
+    else
+    {
+        printf("Position bit %d  of num %d is not set\n",position, num);
+    }
+    
+    /* Left shift 1, n times and perform bitwise OR with num */
+    newNum = (1 << position) | num;
+    printf("\nBit set successfully.\n\n");
+
+    printf("Number before setting %d bit: %d (in decimal)\n", position, num);
+    printf("Number after setting %d bit: %d (in decimal)\n", position, newNum);
+
+}
+
+void micron_code_test()
+{
+    int test[4][4];
+    int i,j,a;
+    for (i =0; i <4; i++)
+    {
+        for(j=0; j<4;j++)
+        {
+           if(i == j)
+           {
+               test[i][j] = 1;
+           }
+           else 
+           {
+               test[i][j] = 0;
+           }
+        }
+        printf("\n");
+    }
+    for (i =0; i <4; i++)
+    {
+        for(j=0; j<4;j++)
+        {
+            printf(" test[i][j] is %d\n",  test[i][j]);
+        }
+        printf("\n");
+    
+    }
+}
+
+void structure_style_demo()
+{
+    struct test_Struct_style_1 style1;
+    style1.x = 1;
+    style1.y =1;
+
+    struct test_Struct_style_2 style2 =
+    {
+        .a = 10,
+        .b =100
+    };
+
+    printf("style2.a is %d\n", style2.a);
+    printf("style2.b is %d\n", style2.b);
+}
 
 void sort_2D_array()
 {
@@ -131,8 +240,7 @@ void sort_1D_array()
     for(step =0; step<size-1; step++)
     {
         for (int arrIndex = 0; arrIndex< size -step - 1; arrIndex++) 
-        {
-      
+        {      
             // To sort in descending order, change">" to "<".
             if (arr[arrIndex] > arr[arrIndex + 1]) 
             {    
@@ -661,7 +769,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghij")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmn")) != -1)
     {
         switch(opt)
         {
@@ -703,6 +811,22 @@ int main(int argc, char *argv[])
 
             case'j':
                 sort_2D_array();      
+            break;
+
+            case'k':
+                structure_style_demo();
+            break;
+
+            case 'l':
+                micron_code_test();
+            break;
+
+            case 'm':
+                bitwise();
+            break;
+
+            case 'n':
+                c_style_enum();
             break;
 
             default :
