@@ -60,6 +60,51 @@ typedef struct {
     const int maxlen;
 } circ_bbuf_t;
 
+void remove_duplicate_arr()
+{
+    int arr[10] ={1,2,3,4,5,5,5,5,7,8};
+    int Size = sizeof(arr)/sizeof(arr[0]);
+	int i,j,k; 
+ 
+	for (i = 0; i < Size; i++)
+	{
+		for(j = i + 1; j < Size; j++)
+		{
+    		if(arr[i] == arr[j])
+    		{
+    			for(k = j; k < Size; k++)
+    			{
+    				arr[k] = arr[k + 1];
+				}
+				Size--;
+				j--;
+			}
+		}
+	}
+
+ 	printf("\n Final Array after Deleteing Duplicate Array Elements is:\n");
+ 	for (i = 0; i < Size; i++)
+  	{
+        if(i == Size -1)
+        {
+            printf("%d\n", arr[i]);
+        }
+        else
+        {
+            printf("%d\t", arr[i]);
+        }
+  	}
+    printf("size of arr is %d\n", Size);	     
+}
+
+void post_incre_pre_incre()
+{
+    int x = 0;
+    printf("pre increment is %d\n", ++x);
+    printf("post increment is %d\n", x++);
+    printf("post increment 2 is %d\n", x++);
+}
+
 void c_style_enum()
 {
     week_obj;
@@ -685,42 +730,42 @@ void pointer2PointerDemo()
     int i = 5, j = 6, k = 7;
 	int *ip1 = &i, *ip2 = &j;
     int value =0;
-    printf("NOTE &var is getting address of the variables  address of the variable on the  computer.\nif the pointer is *ptr and it pointing to some variable such as ptr=&variable , printing ptr only may yield address of the variable  it poiting to.\n");
+    printf("NOTE &var is getting address of the variables  address of the variable on the  computer.\nif the pointer is *ptr and it pointing to some variable such as *ptr=&variable , printing ptr only may yield address of the variable  it poiting to.\n");
     printf("We usually confused when a pointer is with '&' or without '&' operator,refer INfO 2 & INFO 3 to recall\n");
     printf("--------------------------------------\n");
     printf("INFO 1\n");
-    printf("i,j,k is just constant variable\n");
-    printf("adress of  i is %p\n",&i);
-    printf("adress of  j is %p\n",&j);
-    printf("adress of  k is %p\n",&k);
+    printf(" **ipp = NULL ,*ip1 = &i, *ip2 = &j ,i = 5,j = 6,k = 7 is just constant variable\n");
+    printf("printing &i -> adress of  i is %p\n",&i);
+    printf("printing &j -> adress of  j is %p\n",&j);
+    printf("printing &k -> adress of  k is %p\n",&k);
     printf("--------------------------------------\n");
     printf("INFO 2\n");
-    printf("adress of pointer &ip1 is %p\n",&ip1);
-    printf("adress of pointer &ip2 is %p\n",&ip2);
-    printf("adress of pointer &ipp is %p\n",&ipp);   
-    printf("adress of pointer ip1 is %p\n",ip1);
-    printf("adress of pointer ip2 is %p\n",ip2);
+    printf("printing &ip1 -> adress of pointer &ip1 is %p\n",&ip1);
+    printf("printing &ip2 -> adress of pointer &ip2 is %p\n",&ip2);
+    printf("printing &ipp -> adress of pointer &ipp is %p\n",&ipp);   
+    printf("printing ip1 -> adress of pointer ip1 is %p\n",ip1);
+    printf("printing ip2 -> adress of pointer ip2 is %p\n",ip2);
     //printf("adress of pointer ipp is %p\n",&ipp);
     printf("--------------------------------------\n");
     printf("INFO 3\n");
     printf("*ip1 = &i:");
-    printf("adress of  ip1 is %p\n",ip1);
+    printf("printing ip1 -> adress of  ip1 is %p\n",ip1);
     printf("*ip2 = &j:");
-    printf("adress of  ip2 is %p\n",ip2);
+    printf("printing ip2 -> adress of  ip2 is %p\n",ip2);
     printf("ipp is not doing anything yet:");
-    printf("adress of  ipp is %p\n",ipp);
-    printf("adress of  &ipp is %p\n",&ipp);
+    printf("printing ipp -> adress of  ipp is %p\n",ipp);
+    printf("printing &ipp -> adress of  &ipp is %p\n",&ipp);
     printf("--------------------------------------\n");
     printf("INFO 4\n");
     ipp = &ip1;
     printf("Now ipp = &ip1:");
-    printf("&ipp is still equal %p\n",&ipp);
+    printf("printing &ipp -> &ipp is still equal %p\n",&ipp);
     printf("This is just to demonstrate regardless how ipp pointing, it address won't change, what change is address it pointing to\n");
     printf("--------------------------------------\n");
     printf("INFO 5\n");
-    printf("*ipp is equal to print ip1 value -> %p\n",*ipp);
+    printf("printing *ipp -> *ipp is equal to print ip1 value -> %p\n",*ipp);
     printf("ipp is equal to print &ip1 is %p\n",ipp);
-    printf("**ipp is %d\n", **ipp);
+    printf("printing **ipp -> **ipp is %d\n", **ipp);
 }
 
 void b_changePointerValuewithPtr2Ptr(int ** ptr)
@@ -769,7 +814,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghijklmn")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmnop")) != -1)
     {
         switch(opt)
         {
@@ -827,6 +872,14 @@ int main(int argc, char *argv[])
 
             case 'n':
                 c_style_enum();
+            break;
+
+            case 'o':
+                post_incre_pre_incre();
+            break;
+
+            case'p':
+                remove_duplicate_arr();
             break;
 
             default :
