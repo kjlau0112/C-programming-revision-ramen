@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h> 
+#include <inttypes.h>
 
 enum week
 {
@@ -60,6 +61,256 @@ typedef struct {
     const int maxlen;
 } circ_bbuf_t;
 
+int x;
+ 
+void arrayPosition_remove()
+{
+    int arr[] = {1,2,3,4,5,6};
+
+    int i;
+    int target_position =2;
+    int arrSize= sizeof(arr)/sizeof(arr[0]);
+    
+    for(i = target_position -1; i < arrSize;i++)
+    {
+        arr[i] = arr[i+1];
+    }
+    arrSize--;
+
+    for(i =0; i < arrSize;i++)
+    {
+        printf("%d\n",arr[i]);
+    }
+}
+
+void autoStorageClass()
+{
+ 
+    printf("\nDemonstrating auto class\n\n");
+ 
+    // declaring an auto variable (simply
+    // writing "int a=32;" works as well)
+    auto int a = 32;
+ 
+    // printing the auto variable 'a'
+    printf("Value of the variable 'a'"
+           " declared as auto: %d\n",
+           a);
+ 
+    printf("--------------------------------");
+}
+ 
+void registerStorageClass()
+{
+ 
+    printf("\nDemonstrating register class\n\n");
+ 
+    // declaring a register variable
+    register char b = 'G';
+ 
+    // printing the register variable 'b'
+    printf("Value of the variable 'b'"
+           " declared as register: %d\n",
+           b);
+ 
+    printf("--------------------------------");
+}
+ 
+void externStorageClass()
+{
+ 
+    printf("\nDemonstrating extern class\n\n");
+ 
+    // telling the compiler that the variable
+    // z is an extern variable and has been
+    // defined elsewhere (above the main
+    // function)
+    extern int x;
+ 
+    // printing the extern variables 'x'
+    printf("Value of the variable 'x'"
+           " declared as extern: %d\n",
+           x);
+ 
+    // value of extern variable x modified
+    x = 2;
+ 
+    // printing the modified values of
+    // extern variables 'x'
+    printf("Modified value of the variable 'x'"
+           " declared as extern: %d\n",
+           x);
+ 
+    printf("--------------------------------");
+}
+ 
+void staticStorageClass()
+{
+    int i = 0;
+ 
+    printf("\nDemonstrating static class\n\n");
+ 
+    // using a static variable 'y'
+    printf("Declaring 'y' as static inside the loop.\n"
+           "But this declaration will occur only"
+           " once as 'y' is static.\n"
+           "If not, then every time the value of 'y' "
+           "will be the declared value 5"
+           " as in the case of variable 'p'\n");
+ 
+    printf("\nLoop started:\n");
+ 
+    for (i = 1; i < 5; i++) {
+ 
+        // Declaring the static variable 'y'
+        static int y = 5;
+ 
+        // Declare a non-static variable 'p'
+        int p = 10;
+ 
+        // Incrementing the value of y and p by 1
+        y++;
+        p++;
+ 
+        // printing value of y at each iteration
+        printf("\nThe value of 'y', "
+               "declared as static, in %d "
+               "iteration is %d\n",
+               i, y);
+ 
+        // printing value of p at each iteration
+        printf("The value of non-static variable 'p', "
+               "in %d iteration is %d\n",
+               i, p);
+    }
+ 
+    printf("\nLoop ended:\n");
+ 
+    printf("--------------------------------");
+}
+
+void C_storageClassdemo()
+{
+     printf("A program to demonstrate"
+           " Storage Classes in C\n\n");
+ 
+    // To demonstrate auto Storage Class
+    autoStorageClass();
+ 
+    // To demonstrate register Storage Class
+    registerStorageClass();
+ 
+    // To demonstrate extern Storage Class
+    externStorageClass();
+ 
+    // To demonstrate static Storage Class
+    staticStorageClass();
+ 
+    // exiting
+    printf("\n\nStorage Classes demonstrated");
+
+}
+
+void  ptr_2_array()
+{
+    int array[5] = {1,2,3,4,5};
+    int array2[] = {6,7,8,9,10};
+    int i;
+    int *ptr = array;
+
+    for(i = 0; i< 5; i++)
+    {
+        printf("%d\n", ptr[i]);
+    }
+
+    ptr = array2;
+    //ptr = &array2; incompatible data type
+
+    for(i = 0; i< 5; i++)
+    {
+        printf("%d\n", ptr[i]);
+    }
+
+
+
+}
+
+unsigned int countSetBits(unsigned int n)
+{
+	unsigned int count = 0;
+	while (n) {
+		count += n & 1;
+		n >>=1;
+	}
+	return count;
+}
+
+void count_set_bit()
+{
+    unsigned int value= 0;
+    value = countSetBits(9);
+
+     printf("%d\n", value);
+}
+
+int decToBinary(int n)
+{
+    char character;
+    // Size of an integer is assumed to be 32 bits
+    for (int i = 31; i >= 0; i--) {
+        int k = n >> i;
+        if (k & 1)
+        {
+            character= '1';
+            printf("%c", character);
+        }
+        else
+        {
+            character ='0';
+            printf("%c", character);
+        }
+
+    }
+     printf("\n");
+}
+
+int count_repeated_arr_occurence(int arr[],int arrSize,int target)
+{
+    int counter = 0;
+
+    for (int i=0; i<arrSize; i++)
+    {
+        if (target == arr[i])
+        counter++;
+
+    }
+
+    return counter;    
+}
+
+void check_repeated_arr()
+{
+    //int arr[] ={1,2,3,4,4,5,5,5,5,7,8};
+    int arr[] = {4, 7,7,7,2, 4, 5, 2, 3, 1};
+    int Size = sizeof(arr)/sizeof(arr[0]);
+    int i,j, count,temp; 
+
+    for (i = 0; i < Size; i++)
+	{
+		for(j = i + 1; j < Size; j++)
+		{
+            if(arr[i] == arr[j])
+            {
+                printf(" repeated arr is %d\n", arr[i]);
+            }
+    	}   
+    }
+
+    count = count_repeated_arr_occurence(arr,Size,7);
+    printf(" 7 have how many %d  repeatition\n", count);
+
+}
+
 void remove_duplicate_arr()
 {
     int arr[10] ={1,2,3,4,5,5,5,5,7,8};
@@ -103,6 +354,7 @@ void post_incre_pre_incre()
     printf("pre increment is %d\n", ++x);
     printf("post increment is %d\n", x++);
     printf("post increment 2 is %d\n", x++);
+    printf("value of x after twice post increment is %d\n", x);
 }
 
 void c_style_enum()
@@ -118,6 +370,7 @@ void c_style_enum()
 void bitwise()
 {
     int num, position, newNum, bitStatus;
+    uint32_t targetbit = 0;
 
     /* Input number from user */
     printf("Enter any number: ");
@@ -127,6 +380,9 @@ void bitwise()
     printf("Enter nth bit to check and set (0-31): ");
     scanf("%d", &position);
 
+    printf("CHECK INDIVIDUAL BIT\n");
+    decToBinary(num);
+    printf("\n");
     /* Right shift num, position times and perform bitwise AND with 1 */
     bitStatus = (num >> position) & 1;
     
@@ -139,12 +395,18 @@ void bitwise()
         printf("Position bit %d  of num %d is not set\n",position, num);
     }
     
+    printf("Set Bit\n");
+    printf("\n");
     /* Left shift 1, n times and perform bitwise OR with num */
     newNum = (1 << position) | num;
     printf("\nBit set successfully.\n\n");
 
     printf("Number before setting %d bit: %d (in decimal)\n", position, num);
     printf("Number after setting %d bit: %d (in decimal)\n", position, newNum);
+
+    targetbit = 1 << 12;
+    printf("%" PRIu32 "\n",targetbit);
+    decToBinary((int)targetbit);
 
 }
 
@@ -814,7 +1076,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghijklmnop")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmnopqrst")) != -1)
     {
         switch(opt)
         {
@@ -879,7 +1141,23 @@ int main(int argc, char *argv[])
             break;
 
             case'p':
-                remove_duplicate_arr();
+                arrayPosition_remove();
+            break;
+
+            case 'q':
+                check_repeated_arr();
+            break;
+
+            case 'r':
+                count_set_bit();
+            break;
+
+            case 's':
+                ptr_2_array();
+            break;
+
+            case 't':
+                C_storageClassdemo();
             break;
 
             default :
