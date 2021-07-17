@@ -63,6 +63,167 @@ typedef struct {
 
 int x;
  
+void display(struct node * var)
+{
+    struct node *temp=var;
+    if(temp==NULL)
+    {
+        printf("\nLinked list is empty.");
+        return;
+    }
+    while(temp->nextPtr !=NULL)
+    {
+        printf("%d -> ",temp->data);
+        temp=temp->nextPtr;
+    }
+    printf("%d",temp->data);
+}
+
+void my_link_list()
+{
+    int option;
+    struct node* head= NULL;
+    struct node* head2 = NULL;
+    struct node* head3 = NULL;
+    struct node*temp = NULL;
+    struct node*temp2 = NULL;
+    struct node*temp3 = NULL;
+    int count = 0;
+    int position = (3+1)/2;
+
+    
+    printf("Insertion : \n1. Beginning  2. Middle   3. Ending   4. display  5. Exit");
+    while(1)
+    {
+        printf("\nEnter your option : ");
+        scanf("%d",&option);
+        switch(option)
+        {
+            case 1:
+                head = (struct node*)malloc(sizeof(struct node));
+                head->data= 5;
+                head->nextPtr =NULL;
+            
+                struct node * newNode = (struct node*)malloc(sizeof(struct node));
+                newNode->data =10;
+                newNode->nextPtr = head;
+            
+                head = newNode;
+           
+                struct node * anotherNewNode =(struct node*)malloc(sizeof(struct node));
+            
+                anotherNewNode->data =100;
+                anotherNewNode-> nextPtr = newNode;
+            
+                head = anotherNewNode;
+                display(head);
+                
+                printf("\n");
+                printf("Deleteting head node\n");
+                temp = head;
+                head = head->nextPtr;
+                free(temp);
+                display(head);
+            break;
+            
+            case 2 :    
+                //Ins_middle();
+                head3 = (struct node*)malloc(sizeof(struct node));
+                head3->data= 5;
+                head3->nextPtr =NULL;
+            
+                struct node * newNode3 = (struct node*)malloc(sizeof(struct node));
+                newNode3->data =10;
+                newNode3->nextPtr = NULL;
+            
+                head3->nextPtr = newNode3;
+            
+                struct node * anotherNewNode3 =(struct node*)malloc(sizeof(struct node));
+            
+                anotherNewNode3->data =100;
+                anotherNewNode3-> nextPtr = NULL;
+                
+                newNode3-> nextPtr =anotherNewNode3;
+                
+                struct node * anotherNewNode4 =(struct node*)malloc(sizeof(struct node));
+                anotherNewNode4->data=20;
+                anotherNewNode4->nextPtr =NULL;
+
+                anotherNewNode3 ->nextPtr=anotherNewNode4;
+             //  display(head3);
+
+                printf("\n");
+                printf("inserting new node\n");
+                struct node * anotherNewNode5 =(struct node*)malloc(sizeof(struct node));
+                if(anotherNewNode5== NULL)
+                {
+                    printf("LMAO\n");
+                }
+                anotherNewNode5->data =250;
+                anotherNewNode5 ->nextPtr = NULL; 
+                
+                anotherNewNode4->nextPtr = anotherNewNode5;
+                display(head3);
+                // while (count<2)
+                // {
+                //     count++;
+                //     temp3 = temp3->nextPtr;
+                // }
+                
+                // anotherNewNode5->nextPtr =temp3->nextPtr;
+                // temp3->nextPtr =anotherNewNode5;
+
+             //   display(head3);
+                break;
+            
+            case 3 :      
+                head2 = (struct node*)malloc(sizeof(struct node));
+                head2->data= 5;
+                head2->nextPtr =NULL;
+            
+                struct node * newNode2 = (struct node*)malloc(sizeof(struct node));
+                newNode2->data =10;
+                newNode2->nextPtr = NULL;
+            
+                head2->nextPtr = newNode2;
+           
+                struct node * anotherNewNode2 =(struct node*)malloc(sizeof(struct node));
+            
+                anotherNewNode2->data =100;
+                anotherNewNode2-> nextPtr = NULL;
+                
+                newNode2-> nextPtr =anotherNewNode2;
+                display(head2);
+
+                printf("\n");
+                printf("Deleteting end node\n");
+                
+                temp2 = head2;
+                while(temp2->nextPtr->nextPtr != NULL)
+                {
+                    temp2 = temp2->nextPtr;
+                }
+                temp2 = head2->nextPtr;
+                free(temp2->nextPtr);
+                temp2->nextPtr = NULL;
+                display(head2);
+            
+            break;
+            
+            case 4 :    
+            //display();
+            break;
+            case 5 :    
+            exit(1);
+            default :   
+            printf("Enter valid option.");
+                        break;
+        }
+        
+    }
+}
+
+
 void arrayPosition_remove()
 {
     int arr[] = {1,2,3,4,5,6};
@@ -1109,7 +1270,8 @@ int main(int argc, char *argv[])
             break;
 
             case'h':
-                link_list_demo();
+               // link_list_demo();
+               my_link_list();
             break;
 
             case'i':
