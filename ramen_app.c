@@ -28,7 +28,7 @@ struct test_Struct_style_1
 
 struct node
 {
-    char data;
+    int data;
     struct node* nextPtr;
 };
 
@@ -150,20 +150,34 @@ void my_link_list()
                 anotherNewNode4->nextPtr =NULL;
 
                 anotherNewNode3 ->nextPtr=anotherNewNode4;
-             //  display(head3);
+                display(head3);
 
                 printf("\n");
                 printf("inserting new node\n");
                 struct node * anotherNewNode5 =(struct node*)malloc(sizeof(struct node));
-                if(anotherNewNode5== NULL)
-                {
-                    printf("LMAO\n");
-                }
+
                 anotherNewNode5->data =250;
                 anotherNewNode5 ->nextPtr = NULL; 
                 
-                anotherNewNode4->nextPtr = anotherNewNode5;
+                temp3= head3;
+                printf("\n");
+                display(temp3); // Output: 5 -> 10 -> 100 -> 20
+ 
+                temp3 =temp3->nextPtr; //move to next node.
+                printf("\n");
+                display(temp3);// Output: 10 -> 100 -> 20
+
+                temp3 =temp3->nextPtr; // move to next node
+                printf("\n");
+                display(temp3);//Output: 100 -> 20
+
+                anotherNewNode5->nextPtr =temp3->nextPtr; // temp3->nextPtr point to 20
+                // display(anotherNewNode5->nextPtr);
+                temp3->nextPtr =anotherNewNode5; // update temp3->next to new node
+
+                printf("\n");
                 display(head3);
+
                 // while (count<2)
                 // {
                 //     count++;
