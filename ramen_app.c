@@ -62,10 +62,63 @@ typedef struct {
 } circ_bbuf_t;
 
 int x;
- 
+
+void double_pointer_again()
+{
+    int **ptr;
+    int value = 150;
+    ptr = (int**)malloc(sizeof(int*));
+    *ptr = &value;
+    printf("%d\n",**ptr);
+}
+
+void array_again()
+{
+    int arr[5] ={}; 
+    int i ;
+    for(i=0; i<5; i++)
+    {
+        if(i ==3)
+        {
+            arr[i] =150;
+        }
+    }
+    
+    printf("%d\n", arr[1]);
+
+    char my_string_arr[10] = "";
+    my_string_arr[0]= 'L';
+    printf("%c\n",my_string_arr[0]);
+    
+    char * mystring = "hello wolrd";
+    //mystring[2]='b'; <----segmentation fault
+    printf("%c\n",mystring[1]);
+
+
+}
+
+int link_list_node_counter(struct node * var)
+{
+    struct node *temp=var;
+    int count =0;
+    if(temp==NULL)
+    {
+        printf("\nLinked list is empty.");
+        return count;
+    }
+    while(temp->nextPtr !=NULL)
+    {
+        count++;
+        temp=temp->nextPtr;   
+    }
+
+    return count;
+}
+
 void display(struct node * var)
 {
     struct node *temp=var;
+    int number =0;
     if(temp==NULL)
     {
         printf("\nLinked list is empty.");
@@ -75,6 +128,7 @@ void display(struct node * var)
     {
         printf("%d -> ",temp->data);
         temp=temp->nextPtr;
+        number++;
     }
     printf("%d",temp->data);
 }
@@ -82,12 +136,14 @@ void display(struct node * var)
 void my_link_list()
 {
     int option;
-    struct node* head= NULL;
+    struct node* head  = NULL;
     struct node* head2 = NULL;
     struct node* head3 = NULL;
-    struct node*temp = NULL;
-    struct node*temp2 = NULL;
-    struct node*temp3 = NULL;
+    struct node* head4 = NULL;
+    struct node* temp  = NULL;
+    struct node* temp2 = NULL;
+    struct node* temp3 = NULL;
+    struct node* temp4 = NULL;
     int count = 0;
     int position = (3+1)/2;
 
@@ -151,43 +207,44 @@ void my_link_list()
 
                 anotherNewNode3 ->nextPtr=anotherNewNode4;
                 display(head3);
+                printf("\nnumber of link list is %d\n",link_list_node_counter(head3)); 
 
                 printf("\n");
-                printf("inserting new node\n");
+                printf("inserting new node 250\n");
                 struct node * anotherNewNode5 =(struct node*)malloc(sizeof(struct node));
 
                 anotherNewNode5->data =250;
                 anotherNewNode5 ->nextPtr = NULL; 
-                
-                temp3= head3;
-                printf("\n");
-                display(temp3); // Output: 5 -> 10 -> 100 -> 20
+
+                temp3 = head3;
+
+                // printf("\n");
+                // display(temp3); // Output: 5 -> 10 -> 100 -> 20
  
-                temp3 =temp3->nextPtr; //move to next node.
-                printf("\n");
-                display(temp3);// Output: 10 -> 100 -> 20
+                // temp3 =temp3->nextPtr; //move to next node.
+                // printf("\n");
+                // display(temp3);// Output: 10 -> 100 -> 20
 
-                temp3 =temp3->nextPtr; // move to next node
-                printf("\n");
-                display(temp3);//Output: 100 -> 20
+                // temp3 =temp3->nextPtr; // move to next node
+                // printf("\n");
+                // display(temp3);//Output: 100 -> 20
 
-                anotherNewNode5->nextPtr =temp3->nextPtr; // temp3->nextPtr point to 20
+                // anotherNewNode5->nextPtr =temp3->nextPtr; // temp3->nextPtr point to 20
                 // display(anotherNewNode5->nextPtr);
-                temp3->nextPtr =anotherNewNode5; // update temp3->next to new node
+                // temp3->nextPtr =anotherNewNode5; // update temp3->next to new node
+                // display(head3);
 
-                printf("\n");
-                display(head3);
+                while (count<2)
+                {
+                    count++;
+                    temp3 = temp3->nextPtr;
+                }
 
-                // while (count<2)
-                // {
-                //     count++;
-                //     temp3 = temp3->nextPtr;
-                // }
+                anotherNewNode5->nextPtr =temp3->nextPtr;  // temp3->nextPtr point to 20
+                temp3->nextPtr = anotherNewNode5;         // update temp3->next to new node
                 
-                // anotherNewNode5->nextPtr =temp3->nextPtr;
-                // temp3->nextPtr =anotherNewNode5;
-
-             //   display(head3);
+                printf("\n");
+                display(head3);               
                 break;
             
             case 3 :      
@@ -225,7 +282,59 @@ void my_link_list()
             break;
             
             case 4 :    
-            //display();
+            //delete in the middle
+
+            head4 = (struct node*)malloc(sizeof(struct node));
+            head4->data= 2;
+            head4->nextPtr = NULL;
+        
+            struct node * new_Node = (struct node*)malloc(sizeof(struct node));
+            new_Node->data =10;
+            new_Node->nextPtr = NULL;
+        
+            head4->nextPtr = new_Node;
+        
+            struct node * new_Node2 =(struct node*)malloc(sizeof(struct node));
+        
+            new_Node2->data =100;
+            new_Node2-> nextPtr = NULL;
+            
+            new_Node-> nextPtr = new_Node2;
+            
+            struct node * new_Node3 =(struct node*)malloc(sizeof(struct node));
+            new_Node3->data=20;
+            new_Node3->nextPtr = NULL;
+
+            new_Node2 ->nextPtr=new_Node3;
+    
+            printf("\n");
+            printf("inserting new node\n");
+            struct node * new_Node4 =(struct node*)malloc(sizeof(struct node));
+
+            new_Node4->data =250;
+            new_Node4 ->nextPtr = NULL; 
+
+            new_Node3->nextPtr = new_Node4;
+            temp4 = head4;
+
+            display(head4);
+
+            printf("Deleting a node before last node");
+            while (count<2)
+            {
+                //navigate to the node before last node 
+                count++;
+                temp4 = temp4->nextPtr;
+            }
+            struct node* ptr = temp4->nextPtr;
+            printf("\n");
+            display(ptr); //20->250 NOTE! display(temp4->nextPtr) is equal 250
+            temp4->nextPtr = ptr->nextPtr;
+            free(ptr); // delete data 20
+            printf("\n");
+            display(head4);
+            
+
             break;
             case 5 :    
             exit(1);
@@ -1264,7 +1373,8 @@ int main(int argc, char *argv[])
             break;
 
             case'c':
-                pointer2PointerDemo();
+                double_pointer_again();
+                //pointer2PointerDemo();
             break;
  
             case'd':
@@ -1276,7 +1386,8 @@ int main(int argc, char *argv[])
             break;
             
             case'f':
-                demo_array();
+              //  demo_array();
+              array_again();
             break;
 
             case'g':
