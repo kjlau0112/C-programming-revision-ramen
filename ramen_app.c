@@ -502,11 +502,13 @@ void  ptr_2_array()
     int i;
     int *ptr = array;
 
+    printf("ptr = array;\n");
     for(i = 0; i< 5; i++)
     {
         printf("%d\n", ptr[i]);
     }
 
+    printf("ptr = array2;\n");
     ptr = array2;
     //ptr = &array2; incompatible data type
 
@@ -515,8 +517,19 @@ void  ptr_2_array()
         printf("%d\n", ptr[i]);
     }
 
+    printf("print *(ptr+ i) \n");
 
+    for(i = 0; i< 5; i++)
+    {
+        printf("%d\n", *(ptr +i));
+    }
 
+    printf("print (*ptr+ i) \n");
+
+    for(i = 0; i< 5; i++)
+    {
+        printf("%d\n", *ptr +i);
+    }
 }
 
 unsigned int countSetBits(unsigned int n)
@@ -755,6 +768,14 @@ void sort_2D_array()
         {25, 100, 21, 213},
         {134, 43, 64, 75}
     };
+
+    int row_number= sizeof(disp)/sizeof(disp[0]);
+    printf("row_number %d\n", row_number);
+    int column = sizeof(disp[0])/sizeof(disp[0][0]);
+    printf("column %d\n", column);
+    printf("sizeof(disp[0]) %ld\n", sizeof(disp[0]));
+    printf("sizeof(disp[0][0]) %ld\n", sizeof(disp[0][0]));
+    return;
     
     for (i = 0; i < 4; ++i) 
     {
