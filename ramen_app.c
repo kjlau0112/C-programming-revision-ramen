@@ -14,6 +14,14 @@ enum week
     wednesday
 }week_obj;
 
+typedef struct
+{   
+    int m_pos;
+	int m_size;
+	int *values;
+
+}circular_buffer;
+
 struct test_Struct_style_2
 {
     int a;
@@ -62,6 +70,53 @@ typedef struct {
 } circ_bbuf_t;
 
 int x;
+
+void initSize(circular_buffer *ptr, int size)
+{
+    ptr->m_size = size;
+    ptr->m_pos = 0;
+    ptr->values = (int*)malloc(sizeof(int)*size);
+}
+
+void add_value(circular_buffer *ptr, int value)
+{
+    if(ptr->m_pos == ptr->m_size)
+    {
+        ptr->m_pos =0;
+    }
+    ptr->values[ptr->m_pos]= value;
+    ptr->m_pos++;
+
+}
+
+void display_circular(circular_buffer *ptr)
+{
+    int arr_size;
+    int i;
+    
+    if(ptr->values != NULL)
+    {
+        arr_size = ptr->m_size;
+        
+        for(i=0; i <arr_size;i++)
+        {
+            printf("circular array is %d\n",ptr->values[i]);
+        }
+    }
+}
+
+void circular_array_demo()
+{
+    circular_buffer obj;
+    initSize(&obj,5);
+    add_value(&obj,15);
+    add_value(&obj,20);
+    add_value(&obj,25);
+    add_value(&obj,30);
+    add_value(&obj,35);
+    add_value(&obj,125);
+    display_circular(&obj);
+}
 
 void double_pointer_again()
 {
@@ -1231,7 +1286,7 @@ void  demo_array()
 
    printf("*(&array + 1) %p\n", *(&array + 1));
     
-    printf("diff %ld\n", *(&array + 1) -array);
+    printf("diff of  *(&array + 1) -array is :%ld\n", *(&array + 1) -array);
 }
 
 void process_data_Structure()
@@ -1381,7 +1436,7 @@ int main(int argc, char *argv[])
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghijklmnopqrst")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmnopqrstu")) != -1)
     {
         switch(opt)
         {
@@ -1407,8 +1462,8 @@ int main(int argc, char *argv[])
             break;
             
             case'f':
-              //  demo_array();
-              array_again();
+               demo_array();
+              //array_again();
             break;
 
             case'g':
@@ -1466,6 +1521,10 @@ int main(int argc, char *argv[])
 
             case 't':
                 C_storageClassdemo();
+            break;
+
+            case 'u':
+                circular_array_demo();
             break;
 
             default :
