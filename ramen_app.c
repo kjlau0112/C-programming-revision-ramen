@@ -1316,7 +1316,7 @@ void process_data_Structure()
     printf("ptr ->id %s\n",ptr->firstname);
     printf("ptr ->id %s\n",ptr->lastname);
 
-    struct master_student *MasterInfo = (struct master_student *) malloc(sizeof(struct master_student *));
+    struct master_student *MasterInfo = (struct master_student *) malloc(sizeof(struct master_student ));
     MasterInfo->student_ptr = (struct student*) malloc(sizeof(struct student *));
     strcpy(MasterInfo->student_ptr->firstname,"Joe");
     strcpy(MasterInfo->student_ptr->lastname,"Biden");
@@ -1431,12 +1431,50 @@ void changePointerValueviaFunctionpara()
     }
 }
 
+typedef struct simpleList
+{
+    int value;
+    struct simpleList * simpleNext;
+
+}simpleList;
+
+void simpleListView(simpleList * head)
+{
+    while (head !=NULL)
+    {
+        printf("%d ->", head ->value);
+        head = head->simpleNext;
+    }
+    printf("\n");
+}
+void simpleLinkListNoMemoryAllocation()
+{
+    simpleList n1, n2, n3;
+    simpleList *headNode;
+    headNode=&n3;
+    n1.value=100;
+    n1.simpleNext=NULL;
+    n2.value=200;
+    n2.simpleNext =&n1;
+    n3.value=300;
+    n3.simpleNext=&n2;
+
+    simpleListView(headNode);
+
+    //Added a new node and insert in the middle.
+    simpleList n4;
+    n4.value=1000;
+    n4.simpleNext = &n2;
+    n3.simpleNext = &n4;
+    simpleListView(headNode);
+}
+
 int main(int argc, char *argv[])
 {
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghijklmnopqrstu")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmnopqrstuv")) != -1)
     {
         switch(opt)
         {
@@ -1527,6 +1565,10 @@ int main(int argc, char *argv[])
                 circular_array_demo();
             break;
 
+            case 'v':
+                printf("simple link list without memory allocation.\n");
+                simpleLinkListNoMemoryAllocation();
+                break;
             default :
                 printf("unable to parse cli\n");
             break;
