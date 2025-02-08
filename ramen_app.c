@@ -1469,12 +1469,44 @@ void simpleLinkListNoMemoryAllocation()
     simpleListView(headNode);
 }
 
+void shiftZeroLogic()
+{
+    int array[] ={1,2,0,3,4,0,5,6,0,0,9,0};
+    int arrLength= sizeof(array)/sizeof(array[0]);
+    int count = 0;
+
+    for (int i =0; i <arrLength; i++)
+    {
+        if (array[i] !=0)
+        {
+            array[count] =array[i];
+            count ++;
+        }
+    }
+
+    for (int i =count; i< arrLength; i++)
+    {
+        array[i]=0;
+    }
+
+    for (int i =0; i< arrLength; i++)
+    {
+        printf("%d", array[i]);
+    }
+    printf("\n");
+}
+
+void shiftZeroDemo()
+{
+    shiftZeroLogic();
+}
+
 int main(int argc, char *argv[])
 {
     int opt = 0;
     srand(time(NULL)); 
 
-    while((opt = getopt(argc, argv,"abcdefghijklmnopqrstuv")) != -1)
+    while((opt = getopt(argc, argv,"abcdefghijklmnopqrstuvw")) != -1)
     {
         switch(opt)
         {
@@ -1568,6 +1600,11 @@ int main(int argc, char *argv[])
             case 'v':
                 printf("simple link list without memory allocation.\n");
                 simpleLinkListNoMemoryAllocation();
+                break;
+            
+            case 'w':
+                printf("NI interview question Stable Zero Shifting/Move Zero to the end\n");
+                shiftZeroDemo();
                 break;
             default :
                 printf("unable to parse cli\n");
